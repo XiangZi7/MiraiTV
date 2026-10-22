@@ -1,0 +1,129 @@
+/* Hyalite optics with a light-theme finish. The lens is a sibling of the
+   content, so nested controls do not sample a translucent backdrop root. */
+@layer components {
+  .glass-surface {
+    /* Custom properties inherit: an unattached child must never use its parent's map. */
+    --hyalite-010: none;
+    --glass-tint: rgb(255 255 255 / 10%);
+    --glass-border: rgb(255 255 255 / 48%);
+    --glass-shadow: 0 8px 24px rgb(37 55 86 / 10%);
+    position: relative;
+    isolation: isolate;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-panel, 30px);
+    background: transparent;
+    box-shadow:
+      var(--glass-shadow),
+      inset 0 0.5px 0 rgb(255 255 255 / 42%),
+      inset 0 -0.5px 0 rgb(255 255 255 / 14%),
+      inset 3px 0 9px -6px rgb(255 255 255 / 42%),
+      inset -3px 0 9px -6px rgb(255 255 255 / 42%);
+  }
+
+  /* A small, explicit set of focal surfaces gets live refraction. No blanket
+     backdrop blur on cards: it creates a compositor surface per list item. */
+  .glass-refract {
+    --hyalite-010: blur(0.5px);
+  }
+
+  .glass-surface::before {
+    content: '';
+    position: absolute;
+    /* Include the border to match the engine's offsetWidth/offsetHeight map. */
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: var(--glass-tint);
+    -webkit-backdrop-filter: var(--hyalite-010, none);
+    backdrop-filter: var(--hyalite-010, none);
+  }
+
+  /* Replaced form controls cannot render ::before. They have no glass children. */
+  :is(input, textarea).glass-surface {
+    background: var(--glass-tint);
+    -webkit-backdrop-filter: var(--hyalite-010, none);
+    backdrop-filter: var(--hyalite-010, none);
+  }
+
+  .glass-surface .glass-surface,
+  .glass-indicator {
+    --glass-shadow: 0 2px 8px rgb(37 55 86 / 6%);
+  }
+
+  /* Floating menus must hide underlying text without adding backdrop filters. */
+  .glass-surface.glass-popover {
+    --glass-border: var(--color-line-strong, #55739d35);
+    --glass-shadow: 0 12px 32px rgb(37 55 86 / 14%);
+    /* Paint on the container so the base also covers a scrolled option list. */
+    background: var(--color-base, #f3f5fa);
+  }
+
+  .glass-surface.glass-popover::before {
+    /* The solid base needs no lens; its negative inset would create scrollbars. */
+    content: none;
+  }
+
+  .glass-control {
+    transition:
+      border-color 200ms,
+      color 200ms,
+      transform 200ms;
+  }
+
+  .glass-control:hover {
+    border-color: rgb(255 255 255 / 42%);
+  }
+
+  .glass-accent {
+    --glass-tint: rgb(53 104 198 / 76%);
+    color: white;
+  }
+
+  .glass-danger {
+    --glass-tint: color-mix(in srgb, var(--color-danger) 14%, transparent);
+    color: var(--color-danger);
+  }
+
+  .glass-on-image {
+    --glass-tint: rgb(0 0 0 / 13%);
+    color: white;
+    text-shadow: 0 1px 4px rgb(0 0 0 / 70%);
+  }
+
+  .glass-selected {
+    color: var(--color-brand);
+    background: rgb(255 255 255 / 16%);
+    box-shadow: inset 0 0.5px 0 rgb(255 255 255 / 42%);
+  }
+
+  .glass-track {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .glass-track [data-glass-key] {
+    position: relative;
+    z-index: 1;
+  }
+
+  .glass-track[data-glass-ready] > .glass-selected {
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-surface::before,
+  :is(input, textarea).glass-surface {
+    background: var(--color-surface-1, #f3f5fa);
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .glass-accent::before {
+    background: var(--color-brand, #3568c6);
+  }
+  .glass-on-image::before {
+    background: #18263a;
+  }
+}

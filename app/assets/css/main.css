@@ -1,0 +1,216 @@
+@import 'tailwindcss';
+@import './glass.css';
+
+/* Keep renderer palette tokens even when they are read from JavaScript. */
+@theme static {
+  --color-ambient-blue: #dbe3ed;
+  --color-ambient-lilac: #e6e1ec;
+  --color-ambient-mist: #e0e9e7;
+  --color-ambient-white: #f5f6f8;
+  --ambient-height: clamp(48rem, 75vw, 52rem);
+  --ambient-height-stacked: 60rem;
+}
+
+/* ==========================================================================
+   MiraiTV 设计系统 —— Hyalite 透明折射玻璃
+   所有视觉常量集中在此处定义，组件内禁止出现裸色值 / 魔法尺寸
+   ========================================================================== */
+@theme {
+  /* ---------- 雾白底色与浅蓝灰表面 ---------- */
+  --color-base: #ffffff; /* 页头氛围渐变下方保持纯白 */
+  --color-surface-1: #ffffff; /* 区块底色 */
+  --color-surface-2: #eaf0f8; /* 卡片底色 */
+  --color-surface-3: #dce6f3; /* 悬浮 / 激活底色 */
+
+  /* ---------- 描边 ---------- */
+  --color-line: #354e7117; /* 常规分隔线 */
+  --color-line-strong: #55739d35; /* 强调描边 */
+
+  /* ---------- 文字 ---------- */
+  --color-ink: #233149; /* 主文字 */
+  --color-ink-2: #53637b; /* 次级文字 */
+  --color-ink-3: #65758b; /* 辅助 / 占位文字 */
+
+  /* ---------- 品牌主色：清透蓝 ---------- */
+  --color-brand: #3568c6;
+  --color-brand-hover: #2755ab;
+  --color-brand-soft: #749ce51c;
+
+  /* ---------- 状态色 ---------- */
+  --color-star: #a56b14; /* 评分星 */
+  --color-live: #23825c; /* 更新中 */
+  --color-danger: oklch(64.5% 0.195 21); /* 红点 / 删除 */
+
+  /* ---------- 圆角 ---------- */
+  --radius-poster: 1rem; /* 海报 */
+  --radius-card: 1.5rem; /* 卡片 */
+  --radius-panel: 1.875rem; /* 与参考演示相同的 30px 圆角 */
+
+  /* ---------- 字体 ---------- */
+  --font-sans:
+    'Inter', 'Noto Sans SC', 'Noto Sans JP', -apple-system, BlinkMacSystemFont,
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --font-display: 'Noto Serif JP', 'Noto Serif SC', 'Songti SC', Georgia, serif;
+
+  /* ---------- 动画 ---------- */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fade-up: fade-up 0.5s var(--ease-out-soft) both;
+  --animate-fade-in: fade-in 0.4s var(--ease-out-soft) both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   基础样式
+   ========================================================================== */
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* 全站细滚动条 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-surface-3);
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-line-strong);
+  }
+
+  ::selection {
+    background: var(--color-brand);
+    color: white;
+  }
+
+  /* 统一聚焦环，保证键盘可达性 */
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+}
+
+/* ==========================================================================
+   自定义工具类
+   ========================================================================== */
+
+/* 全站主容器：与 UI 稿一致的最大宽度与左右留白 */
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 90rem;
+  padding-inline: 1rem;
+
+  @variant sm {
+    padding-inline: 2rem;
+  }
+
+  @variant xl {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* 隐藏滚动条但保留滚动能力，用于横向卡片列 */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Hero 文案在图片上的可读性保护 */
+@utility text-shadow-hero {
+  text-shadow: 0 2px 24px rgb(255 255 255 / 55%);
+}
+
+/* 多行截断 */
+@utility line-clamp-fade {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 每个可见玻璃表面都使用 Hyalite，包括大面板；光学样式见 glass.css。 */
+@layer components {
+  .app-shell {
+    position: relative;
+    isolation: isolate;
+    background: var(--color-base);
+  }
+
+  .home-section {
+    margin-top: 2.5rem;
+  }
+
+  /* 视频画面与深色海报占位需要独立的明亮文字。 */
+  .cinema-surface {
+    --color-base: #0b1321;
+    --color-surface-1: #101b2d;
+    --color-surface-2: #18263a;
+    --color-surface-3: #26364d;
+    --color-ink: #f3f6fc;
+    --color-ink-2: #c0cde0;
+    --color-ink-3: #9bacbf;
+    --color-brand: #b5d0ff;
+    --color-star: #f0c96d;
+    color: var(--color-ink);
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "generationMode": "built-in image_gen",
+  "assets": [
+    {
+      "key": "quote",
+      "prompt": "Use case: stylized-concept. Asset type: a premium anime-style illustrated background for the MiraiTV streaming website's quotation card. Create a wide panoramic landscape, approximately 2:1 composition, of a quiet open-air cinema on a grassy seaside hill at blue hour. A softly glowing blank projection screen and two small empty cinema seats occupy the right half, the ocean horizon and distant glowing clouds beyond. Luminous lavender and dusty violet twilight, delicate hand-painted anime environment art, fine atmospheric detail, warm tiny lights, gentle film-like depth. The left third should remain darker and visually calm for white Chinese text that will be added later by the website. Main visual details concentrated to the center-right; composition must still work when cropped to a wide banner. No text, no letters, no logos, no watermarks, no UI, no existing film characters.",
+      "output": "/images/backgrounds/cinema-quote.webp"
+    },
+    {
+      "key": "movies",
+      "prompt": "Use case: stylized-concept. Asset type: wide panoramic header background for the Movies section of MiraiTV, a dark purple streaming website. Original high-quality 2D anime environment illustration of a beautiful rooftop outdoor movie theater above a futuristic Japanese city at night: a glowing blank cinema screen, rows of empty red-violet theater seats, soft projection light crossing subtle night mist, distant skyline and stars. Rich cinematic depth, sophisticated hand-painted anime film background, indigo shadows, lavender glow, restrained warm amber lights. Wide landscape composition approximately 2:1, with the cinema and projection beam concentrated in the right two thirds and a calm darker left third for a page title and filters overlaid in HTML. Make the scene legible within a shallow wide crop. No text, no writing, no logos, no watermark, no interface, no copyrighted characters.",
+      "output": "/images/backgrounds/movies-hero.webp"
+    },
+    {
+      "key": "series",
+      "prompt": "Use case: stylized-concept. Asset type: panoramic anime illustration for the TV Series category header of the MiraiTV website. An intimate cinematic Japanese city scene at violet dusk: layered apartment balconies with warmly lit windows, a quiet neighborhood train passing in the distance, gentle rain reflecting lavender and amber lights, a small adult silhouette with an umbrella seen from behind on a right-side balcony looking out across the city. Story-rich and tranquil, sophisticated hand-painted 2D anime background art, atmospheric perspective, beautiful clouds, dark indigo, muted rose and violet with golden window lights. Wide 2:1 landscape, interesting storytelling focal detail on the right two thirds, left third darker, uncluttered and low contrast for a white title and filters to be overlaid. Composition must work as a shallow category header crop. No text, no letters, no signage, no logos, no watermarks, no UI, no existing anime characters.",
+      "output": "/images/backgrounds/series-hero.webp"
+    },
+    {
+      "key": "anime",
+      "prompt": "Use case: stylized-concept. Asset type: wide cinematic illustrated banner for the Anime category of MiraiTV, a dark purple entertainment site. An original wondrous anime fantasy landscape: an adult traveler in a pale cloak stands on a grassy cliff at the right edge, gazing toward a luminous floating island city with elegant towers, waterfalls descending into lavender cloud seas, scattered cherry blossom petals, distant crescent moon and a field of stars. Beautiful detailed 2D anime background painting, enchanting yet refined, deep indigo and purple, pale lilac light, a hint of mint in the waterfalls and warm lights in distant windows. Panoramic 2:1 landscape with the island and traveler on the right two thirds; the left third is softly shadowed and calm to leave readable room for white HTML title and filters. Keep key scene elements visible within a shallow crop. No text, no letters, no logos, no watermark, no UI, no copyrighted characters.",
+      "output": "/images/backgrounds/anime-hero.webp"
+    },
+    {
+      "key": "search",
+      "prompt": "Use case: stylized-concept. Asset type: wide 2:1 anime-style background for MiraiTV's search and explore page. An original hand-painted Japanese animation environment showing a magical library of stories beneath a violet night sky, glowing rectangular film frames floating above a peaceful rooftop observation deck, distant lavender city skyline, thin constellations linking tiny lights, a quiet sense of discovering new worlds. Detailed yet calm cinematic anime background art consistent with a dark violet entertainment website; deep indigo shadows and lilac illumination with small warm gold highlights. Most interesting detail on the right two thirds; leave the left third dark and low contrast for a white title and search input overlaid by HTML. The picture should remain clear in a shallow wide header crop. No text, no letters, no UI, no logos, no watermark, no known characters.",
+      "output": "/images/backgrounds/search-hero.webp"
+    },
+    {
+      "key": "documentary",
+      "prompt": "Use case: stylized-concept. Asset type: wide 2:1 cinematic anime background for the Documentary category of MiraiTV. A breathtaking original hand-painted anime environment: an immense alpine valley and clear winding river, pine forests, snowy distant peaks under a violet twilight sky with a gentle aurora, a small remote observatory and warm camp light on the far right hillside. Evoke the wonder of exploring the real natural world. Sophisticated 2D animated film background, fine atmospheric perspective, deep indigo and lavender, restrained emerald in the forests, realistic landscape shapes interpreted through anime illustration. Keep the right two thirds rich with scenery and the left third softly dark and calm for white HTML text. Works in a wide shallow card crop. No text, no writing, no logos, no watermark, no interface, no existing film characters.",
+      "output": "/images/backgrounds/documentary-hero.webp"
+    }
+  ]
+}

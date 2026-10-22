@@ -1,0 +1,45 @@
+{
+  "name": "miraitv",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "build:pages": "nuxt build --preset cloudflare-pages",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "preview:pages": "wrangler pages dev",
+    "deploy:pages": "pnpm run build:pages && wrangler pages deploy",
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt typecheck",
+    "test:glass": "node --test tests/hyalite.test.mjs",
+    "test:ssr": "node --test tests/ssr.test.mjs tests/detail-episodes.test.mjs tests/playback-sources.test.mjs tests/seo.test.mjs tests/analytics.test.mjs tests/video-playback.test.mjs tests/playback-recovery.test.mjs tests/site-content.test.mjs tests/search.test.mjs tests/proxy-context.test.mjs tests/activity.test.mjs tests/activity-ssr.test.mjs tests/performance.test.mjs tests/watch-progress.test.mjs",
+    "format": "prettier --write app tests *.ts *.json README.md"
+  },
+  "dependencies": {
+    "@iconify-json/lucide": "^1.2.143",
+    "@iconify-json/simple-icons": "^1.2.100",
+    "@nuxt/icon": "^2.5.1",
+    "@pinia/nuxt": "^1.0.2",
+    "@tailwindcss/vite": "^4.3.3",
+    "@vueuse/core": "^15.0.0",
+    "@vueuse/nuxt": "^15.0.0",
+    "clsx": "^2.1.1",
+    "cropperjs": "2.1.0",
+    "hls.js": "^1.7.3",
+    "nuxt": "^4.6.1",
+    "pinia": "^4.0.3",
+    "prettier": "^3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "swiper": "^14.3.0",
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^4.3.3",
+    "vue": "^3.5.43",
+    "vue-router": "^5.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.3.13",
+    "wrangler": "4.137.0"
+  }
+}
