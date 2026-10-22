@@ -57,6 +57,7 @@ export async function startFixture({
   },
   searchState = { unavailable: false, partial: false },
   beforeRespond = async () => {},
+  runtimeEnv = {},
 } = {}) {
   const requests = []
   const favorites = new Set()
@@ -516,6 +517,8 @@ export async function startFixture({
       NUXT_AUTH_COOKIE_SECURE: 'false',
       NUXT_PUBLIC_SITE_URL: 'https://miraitv.example/',
       NUXT_PUBLIC_GA_ID: '',
+      NUXT_REDIRECT_HOSTS: '',
+      ...runtimeEnv,
     },
     windowsHide: true,
     stdio: ['ignore', 'pipe', 'pipe'],

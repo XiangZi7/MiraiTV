@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const site = useSite()
 // 保留组件实例：返回这个页面时筛选、页签和滚动位置都还在
 definePageMeta({ keepalive: true })
 const router = useRouter()
@@ -61,7 +62,7 @@ const HOT_SEARCHES = computed(() =>
 const recommended = computed(() => suggestions.value?.recommendations ?? [])
 const { siteUrl } = useSeo(() => ({
   title: searchTerm.value ? `${searchTerm.value} · 搜索` : '搜索',
-  description: '在 MiraiTV 搜索电影、剧集与动漫，发现热门作品和高分推荐。',
+  description: `在 ${site.siteName} 搜索电影、剧集与动漫，发现热门作品和高分推荐。`,
   noindex: Boolean(searchTerm.value),
   canonicalPath: '/search',
 }))

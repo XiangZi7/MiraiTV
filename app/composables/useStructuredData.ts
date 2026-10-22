@@ -34,21 +34,24 @@ export function useStructuredData(graph: MaybeRefOrGetter<unknown[]>) {
 }
 
 /** 站点本身 + 站内搜索，用于首页 */
-export function websiteSchema(siteUrl: string) {
+export function websiteSchema(
+  siteUrl: string,
+  site: { siteName: string; siteDescription: string; siteLogo: string }
+) {
   const home = absoluteUrl('/', siteUrl)
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: SITE_NAME,
+    name: site.siteName,
     url: home,
-    description: SITE_DESCRIPTION,
+    description: site.siteDescription,
     inLanguage: 'zh-CN',
     publisher: {
       '@type': 'Organization',
-      name: SITE_NAME,
+      name: site.siteName,
       logo: {
         '@type': 'ImageObject',
-        url: absoluteUrl('/brand/mirai-mark.webp', siteUrl),
+        url: new URL(site.siteLogo, home).href,
       },
     },
     potentialAction: {
@@ -80,7 +83,11 @@ export function breadcrumbSchema(
 }
 
 /** 影视条目：电影走 Movie，有分集的走 TVSeries */
-export function mediaSchema(detail: MediaDetail, siteUrl: string) {
+export function mediaSchema(
+  detail: MediaDetail,
+  siteUrl: string,
+  siteName: string
+) {
   const media = detail.media
   const series = media.kind !== 'movie' && (media.episodes ?? 0) !== 1
   const schema: Record<string, unknown> = {
@@ -88,7 +95,7 @@ export function mediaSchema(detail: MediaDetail, siteUrl: string) {
     '@type': series ? 'TVSeries' : 'Movie',
     name: media.title,
     url: absoluteUrl(`/detail/${encodeURIComponent(media.id)}`, siteUrl),
-    description: mediaDescription(media),
+    description: mediaDescription(media, siteName),
     inLanguage: 'zh-CN',
   }
   if (media.originalTitle && media.originalTitle !== media.title)

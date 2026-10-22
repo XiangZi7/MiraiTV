@@ -1,0 +1,8 @@
+# Wrangler 本地预览专用，复制为 .dev.vars；不会自动读取 .env。
+NUXT_API_BASE=http://127.0.0.1:8081/api/v1
+NUXT_API_KEY=
+NUXT_PROXY_SECRET=
+NUXT_AUTH_COOKIE_SECURE=false
+NUXT_REDIRECT_HOSTS=
+NUXT_PUBLIC_SITE_URL=http://localhost:8788
+NUXT_PUBLIC_GA_ID=

@@ -14,7 +14,11 @@ const structuredData = html => {
 }
 
 test('SEO metadata, crawl endpoints and install assets ship in production', async t => {
-  const fixture = await startFixture()
+  const fixture = await startFixture({
+    runtimeEnv: {
+      NUXT_REDIRECT_HOSTS: ' legacy.miraitv.example, miraitv.example ',
+    },
+  })
   t.after(fixture.stop)
   const request = (path, options) => fetch(fixture.base + path, options)
 
@@ -36,16 +40,16 @@ test('SEO metadata, crawl endpoints and install assets ship in production', asyn
         '/search?q=%E5%8A%A8%E6%BC%AB&page=2',
         '/api/session',
       ]) {
-        const response = await requestWithHost(path, 'miraitv.pages.dev')
+        const response = await requestWithHost(path, 'legacy.miraitv.example')
         assert.equal(response.statusCode, 301, path)
-        assert.equal(response.headers.location, 'https://tv.yxcr.top' + path)
+        assert.equal(response.headers.location, origin + path)
       }
       assert.equal(fixture.requests.length, upstreamRequests)
 
       for (const host of [
-        'tv.yxcr.top',
-        'preview.miraitv.pages.dev',
-        'miraitv.pages.dev.other.example',
+        'miraitv.example',
+        'preview.miraitv.example',
+        'legacy.miraitv.example.other.example',
       ]) {
         const response = await requestWithHost('/api/session', host)
         assert.equal(response.statusCode, 200, host)

@@ -41,7 +41,7 @@ const plain = value => JSON.parse(JSON.stringify(value))
 
 function setup({
   dev = false,
-  id = 'G-ED0EZ3RBZ8',
+  id = 'G-EXAMPLE123',
   idleSupported = true,
 } = {}) {
   const hooks = new Map(),
@@ -100,7 +100,7 @@ test('GA queues early events after config while deferring the script until mount
   assert.equal(app.scheduled.length, 0)
   assert.deepEqual(Array.from(app.window.dataLayer[1]), [
     'config',
-    'G-ED0EZ3RBZ8',
+    'G-EXAMPLE123',
   ])
   assert.equal(app.track('search', { search_term: '葬送的芙莉莲' }), true)
   app.window.location.pathname = '/play/another'
@@ -112,7 +112,7 @@ test('GA queues early events after config while deferring the script until mount
   assert.equal(app.scripts.length, 1)
   assert.equal(
     app.scripts[0].src,
-    'https://www.googletagmanager.com/gtag/js?id=G-ED0EZ3RBZ8'
+    'https://www.googletagmanager.com/gtag/js?id=G-EXAMPLE123'
   )
   assert.equal(app.scripts[0].async, true)
   assert.equal(

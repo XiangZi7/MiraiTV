@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const site = useSite()
 import { SwiperSlide } from 'swiper/vue'
 // 保留组件实例：返回这个页面时筛选、页签和滚动位置都还在
 definePageMeta({ keepalive: true })
@@ -8,7 +9,7 @@ const activity = useActivityStore()
 
 const { siteUrl } = useSeo({
   title: '首页',
-  description: SITE_DESCRIPTION,
+  description: site.siteDescription,
   type: 'website',
 })
 // 公告与首页主数据并行，个人栏目在客户端加载，不阻塞公共首屏。
@@ -60,7 +61,7 @@ const CONTINUE_WATCHING = computed(() =>
 const watchlistPreview = computed(() => personal.value?.watchlist ?? [])
 // 站点与站内搜索声明，外加首屏推荐列表
 useStructuredData(() => [
-  websiteSchema(siteUrl),
+  websiteSchema(siteUrl, site),
   itemListSchema(HERO_SLIDES.value, siteUrl),
 ])
 </script>
@@ -68,7 +69,7 @@ useStructuredData(() => [
 <template>
   <div class="home-page">
     <!-- 页面主题交给 h1，轮播里的作品名是 h2；视觉上由头图承担这一行 -->
-    <h1 class="sr-only">MiraiTV — 在线观看电影、剧集与动漫</h1>
+    <h1 class="sr-only">{{ site.siteName }} — 在线观看电影、剧集与动漫</h1>
     <UiRequestState
       class="container-page"
       :pending="status === 'pending'"

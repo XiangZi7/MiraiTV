@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { MediaKind } from '~/types/media'
 import type { CatalogQuery } from '~/types/web-api'
+const site = useSite()
 import {
   RATING_OPTIONS,
   REGION_OPTIONS,
@@ -72,7 +73,7 @@ const canonicalPath = computed(() =>
 )
 const { siteUrl } = useSeo(() => ({
   title: pageTitle.value,
-  description: `${props.subtitle} 在 ${SITE_NAME} 浏览${pageTitle.value}，可按题材、年份、地区与评分筛选。`,
+  description: `${props.subtitle} 在 ${site.siteName} 浏览${pageTitle.value}，可按题材、年份、地区与评分筛选。`,
   canonicalPath: canonicalPath.value,
 }))
 const {

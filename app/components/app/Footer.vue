@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { MAIN_NAV } from '~/constants/navigation'
+const site = useSite()
 
 /** 页脚：与整体气质一致的克制收尾 */
 const SECONDARY_LINKS = [
@@ -64,7 +65,7 @@ const SECONDARY_LINKS = [
       <div
         class="container-page py-4 text-center text-[0.6875rem] leading-relaxed text-ink-3 sm:py-5 sm:text-left"
       >
-        © 2026 MiraiTV · 好的电影，是另一种人生体验。
+        © 2026 {{ site.siteName }} · {{ site.siteTagline }}
       </div>
     </div>
   </footer>

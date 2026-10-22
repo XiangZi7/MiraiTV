@@ -1,4 +1,10 @@
 <script setup lang="ts">
+const site = useSite()
+const brandText = computed(() =>
+  site.siteName.endsWith('TV')
+    ? { name: site.siteName.slice(0, -2), suffix: 'TV' }
+    : { name: site.siteName, suffix: '' }
+)
 /** MiraiTV 品牌标识：紫色二次元电视吉祥物。 */
 withDefaults(
   defineProps<{
@@ -20,10 +26,10 @@ const SIZE_CLASS = {
   <NuxtLink
     to="/"
     class="group inline-flex shrink-0 items-center gap-2"
-    aria-label="MiraiTV 首页"
+    :aria-label="`${site.siteName} 首页`"
   >
     <img
-      src="/brand/mirai-mark.webp"
+      :src="site.siteLogo"
       alt=""
       width="48"
       height="48"
@@ -43,7 +49,12 @@ const SIZE_CLASS = {
         )
       "
     >
-      Mirai<span class="text-brand">TV</span>
+      {{ brandText.name
+      }}<span
+        v-if="brandText.suffix"
+        class="text-brand"
+        >{{ brandText.suffix }}</span
+      >
     </span>
   </NuxtLink>
 </template>

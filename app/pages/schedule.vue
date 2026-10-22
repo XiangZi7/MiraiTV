@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { WEEKDAY_FULL } from '~/constants/navigation'
+const site = useSite()
 // 保留组件实例：返回这个页面时筛选、页签和滚动位置都还在
 definePageMeta({ keepalive: true })
 const api = useApi()
 const { siteUrl } = useSeo({
   title: '周番排期',
-  description:
-    '查看每周动漫新番更新排期，按星期浏览播出时间与最新集数，在 MiraiTV 追踪正在连载的番剧。',
+  description: `查看每周动漫新番更新排期，按星期浏览播出时间与最新集数，在 ${site.siteName} 追踪正在连载的番剧。`,
 })
 const { data, error, status, refresh } = await usePageData('schedule', () =>
   api.schedule()

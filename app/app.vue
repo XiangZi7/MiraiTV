@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const site = useSite()
+useHead({ title: () => site.siteName })
+useSeoMeta({ description: () => site.siteDescription })
+</script>
+
 <template>
   <div>
     <NuxtRouteAnnouncer />

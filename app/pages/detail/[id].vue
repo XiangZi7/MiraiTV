@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const site = useSite()
 const route = useRoute()
 const api = useApi()
 const id = computed(() => String(route.params.id))
@@ -66,7 +67,9 @@ const { collected, saving, actionError, toggle: toggleCollection } = favorite
 await favorite.initial
 const { siteUrl } = useSeo(() => ({
   title: media.value?.title ?? '作品详情',
-  description: media.value ? mediaDescription(media.value) : null,
+  description: media.value
+    ? mediaDescription(media.value, site.siteName)
+    : null,
   image: media.value?.poster,
   noindex: !media.value,
   // 有分集的按剧集声明，单片按电影声明
@@ -78,7 +81,7 @@ const { siteUrl } = useSeo(() => ({
 useStructuredData(() =>
   data.value
     ? [
-        mediaSchema(data.value, siteUrl),
+        mediaSchema(data.value, siteUrl, site.siteName),
         breadcrumbSchema(
           [
             { name: '首页', path: '/' },

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { MediaItem } from '~/types/media'
+const site = useSite()
 defineProps<{ watchlistPreview: MediaItem[] }>()
 </script>
 <template>
@@ -78,7 +79,7 @@ defineProps<{ watchlistPreview: MediaItem[] }>()
           是另一种人生体验。
         </p>
         <footer class="mt-2 text-xs tracking-wider text-ink-2 sm:mt-4">
-          — MiraiTV
+          — {{ site.siteName }}
         </footer>
       </blockquote>
     </div>

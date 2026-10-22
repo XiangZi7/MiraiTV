@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const site = useSite()
 /**
  * 全站登录弹窗：挂在布局上，由 useLoginDialog 控制开合
  * 登录成功后留在当前页面，只在受保护页面被拦下时才跳回来源
@@ -113,7 +114,7 @@ async function done() {
                 :id="titleId"
                 class="mt-4 text-xl font-semibold tracking-tight text-ink"
               >
-                欢迎来到 MiraiTV
+                欢迎来到 {{ site.siteName }}
               </h2>
               <p class="mt-2 text-sm text-ink-3">登录后同步片单与观看记录</p>
               <AccountLoginForm @success="done" />

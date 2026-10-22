@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { MediaItem } from '~/types/media'
 import { DEFAULT_POSTER } from '~/constants/media'
+const site = useSite()
 
 /**
  * 海报容器：原图比例、圆角、悬停反馈与遮罩插槽
@@ -225,7 +226,7 @@ const rootClass = computed(() =>
       >
         <span
           class="mb-1.5 block text-[0.5625rem] font-medium tracking-[0.2em] text-white/45 uppercase"
-          >MiraiTV</span
+          >{{ site.siteName }}</span
         >
         <span
           class="line-clamp-2 font-display text-sm leading-snug font-medium break-words text-white/85 text-shadow-hero"

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Announcement } from '~/types/site-content'
+const site = useSite()
 
 defineProps<{ items: Announcement[] }>()
 </script>
@@ -19,7 +20,9 @@ defineProps<{ items: Announcement[] }>()
         aria-hidden="true"
       />
       站点公告
-      <span class="ml-auto text-xs font-normal text-ink-3">MiraiTV Notes</span>
+      <span class="ml-auto text-xs font-normal text-ink-3"
+        >{{ site.siteName }} Notes</span
+      >
     </div>
     <details
       v-for="item in items"

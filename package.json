@@ -2,18 +2,24 @@
   "name": "miraitv",
   "type": "module",
   "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "build": "nuxt build",
     "build:pages": "nuxt build --preset cloudflare-pages",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "start": "node .output/server/index.mjs",
+    "start:prod": "node --env-file=.env.prod .output/server/index.mjs",
     "preview:pages": "wrangler pages dev",
     "deploy:pages": "pnpm run build:pages && wrangler pages deploy",
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
     "test:glass": "node --test tests/hyalite.test.mjs",
-    "test:ssr": "node --test tests/ssr.test.mjs tests/detail-episodes.test.mjs tests/playback-sources.test.mjs tests/seo.test.mjs tests/analytics.test.mjs tests/video-playback.test.mjs tests/playback-recovery.test.mjs tests/site-content.test.mjs tests/search.test.mjs tests/proxy-context.test.mjs tests/activity.test.mjs tests/activity-ssr.test.mjs tests/performance.test.mjs tests/watch-progress.test.mjs",
+    "test:ssr": "node --test tests/ssr.test.mjs tests/detail-episodes.test.mjs tests/playback-sources.test.mjs tests/seo.test.mjs tests/site-config.test.mjs tests/analytics.test.mjs tests/video-playback.test.mjs tests/playback-recovery.test.mjs tests/site-content.test.mjs tests/search.test.mjs tests/proxy-context.test.mjs tests/activity.test.mjs tests/activity-ssr.test.mjs tests/performance.test.mjs tests/watch-progress.test.mjs",
     "format": "prettier --write app tests *.ts *.json README.md"
   },
   "dependencies": {

@@ -28,4 +28,12 @@ logs
 .dev.vars.*
 !.dev.vars.example
 
+# Personal deployment settings (public templates stay tracked)
+wrangler.toml
+wrangler.local.toml
+wrangler.*.local.toml
+# Personal share cards are published locally but excluded from source control.
+public/*.local.jpg
+public/*.local.webp
+
 .shots

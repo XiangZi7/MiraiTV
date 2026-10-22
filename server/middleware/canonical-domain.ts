@@ -1,11 +1,17 @@
 export default defineEventHandler(event => {
   const url = getRequestURL(event)
-  if (url.hostname !== 'miraitv.pages.dev') return
+  const config = useRuntimeConfig(event)
+  const hosts = String(config.redirectHosts)
+    .split(',')
+    .map(host => host.trim().toLowerCase())
+    .filter(Boolean)
+  if (!hosts.includes(url.hostname.toLowerCase())) return
 
-  // 旧 Pages 域名的书签和分享链接保留原路径、查询参数。
-  return sendRedirect(
-    event,
-    `https://tv.yxcr.top${url.pathname}${url.search}`,
-    301
-  )
+  const target = new URL(String(config.public.siteUrl))
+  // 配置中误包含主站域名时也不能产生重定向循环。
+  if (target.hostname.toLowerCase() === url.hostname.toLowerCase()) return
+  if (!['http:', 'https:'].includes(target.protocol)) return
+  target.pathname = url.pathname
+  target.search = url.search
+  return sendRedirect(event, target.href, 301)
 })

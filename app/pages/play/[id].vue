@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const site = useSite()
 const route = useRoute()
 const player = usePlayback(() => String(route.params.id))
 const playerRef = useTemplateRef<{ play: () => Promise<void> }>('playerRef')
@@ -65,7 +66,9 @@ function chooseEpisode(index: number) {
 // 统一不收录，canonical 指回详情页，权重集中在那一页。
 useSeo(() => ({
   title: `${media.value?.title ?? '播放'} · 正在播放`,
-  description: media.value ? mediaDescription(media.value) : null,
+  description: media.value
+    ? mediaDescription(media.value, site.siteName)
+    : null,
   image: media.value?.poster,
   noindex: true,
   canonicalPath: `/detail/${route.params.id}`,

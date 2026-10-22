@@ -13,11 +13,19 @@ export default defineNuxtConfig({
     proxySecret: '',
     appVersion: '',
     authCookieSecure: true,
+    // 需要 301 跳转到 siteUrl 的旧域名，逗号分隔；默认不启用。
+    redirectHosts: '',
     public: {
       // canonical、og:url、robots 与 sitemap 都基于它；换域名只改这一处。
       // 生产用 NUXT_PUBLIC_SITE_URL 覆盖。
-      siteUrl: 'https://tv.yxcr.top',
-      gaId: 'G-ED0EZ3RBZ8',
+      siteUrl: 'http://localhost:3000',
+      gaId: '',
+      siteName: 'MiraiTV',
+      siteDescription:
+        '在 MiraiTV 发现电影、剧集与动漫：每日新番排期、高分推荐与剧场版，支持多播放源在线观看。',
+      siteLogo: '/brand/mirai-mark.webp',
+      siteImage: '/og-image.jpg',
+      siteTagline: '好的电影，是另一种人生体验。',
     },
   },
 
@@ -64,16 +72,10 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'MiraiTV',
       htmlAttrs: { lang: 'zh-CN', class: 'light' },
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'theme-color', content: '#f3f5fa' },
-        {
-          name: 'description',
-          content:
-            '在 MiraiTV 发现电影、剧集与动漫：每日新番排期、高分推荐与剧场版，支持多播放源在线观看。',
-        },
       ],
       link: [
         // 新路径让浏览器重新获取图标；提供标签页常用的尺寸。

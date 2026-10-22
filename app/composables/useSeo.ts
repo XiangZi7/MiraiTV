@@ -1,10 +1,5 @@
 import type { MediaItem } from '~/types/media'
 
-/** 站点名与默认描述，标题后缀和 og:site_name 共用 */
-export const SITE_NAME = 'MiraiTV'
-export const SITE_DESCRIPTION =
-  '在 MiraiTV 发现电影、剧集与动漫：每日新番排期、高分推荐与剧场版，支持多播放源在线观看。'
-
 export interface SeoInput {
   /** 页面标题，不含站点后缀 */
   title: string
@@ -26,10 +21,7 @@ export function absoluteUrl(path: string, siteUrl: string) {
 }
 
 /** 简介用于 description：压掉换行、去掉元数据源的原文标记并截断 */
-export function metaDescription(
-  text?: string | null,
-  fallback = SITE_DESCRIPTION
-) {
+export function metaDescription(text?: string | null, fallback = '') {
   const value = (text ?? '').split('[简介原文]')[0]!.replace(/\s+/g, ' ').trim()
   const description = value || fallback
   return description.length > 155
@@ -38,7 +30,7 @@ export function metaDescription(
 }
 
 /** 作品的一句话描述，简介缺失时用年份 / 地区 / 题材兜底 */
-export function mediaDescription(media: MediaItem) {
+export function mediaDescription(media: MediaItem, siteName: string) {
   const facts = [
     media.year,
     media.region,
@@ -48,7 +40,7 @@ export function mediaDescription(media: MediaItem) {
   ].filter(Boolean)
   return metaDescription(
     media.synopsis,
-    `${media.title}${facts.length ? `：${facts.join(' · ')}` : ''}。在 ${SITE_NAME} 在线观看。`
+    `${media.title}${facts.length ? `：${facts.join(' · ')}` : ''}。在 ${siteName} 在线观看。`
   )
 }
 
@@ -58,34 +50,40 @@ export function mediaDescription(media: MediaItem) {
  */
 export function useSeo(input: SeoInput | (() => SeoInput)) {
   const route = useRoute()
-  const siteUrl = useRuntimeConfig().public.siteUrl
+  const site = useSite()
+  const { siteUrl } = site
   const resolved = computed(() =>
     typeof input === 'function' ? input() : input
   )
   const canonical = computed(() =>
     absoluteUrl(resolved.value.canonicalPath ?? route.path, siteUrl)
   )
-  const usesDefaultImage = computed(() => !resolved.value.image)
+  const usesDefaultImage = computed(
+    () => !resolved.value.image && site.siteImage === '/og-image.jpg'
+  )
   const image = computed(
     () =>
       new URL(
-        resolved.value.image || '/og-image.jpg',
+        resolved.value.image || site.siteImage,
         `${siteUrl.replace(/\/+$/, '')}/`
       ).href
   )
+  const description = computed(() =>
+    metaDescription(resolved.value.description, site.siteDescription)
+  )
 
   useSeoMeta({
-    title: () => `${resolved.value.title} · ${SITE_NAME}`,
-    description: () => metaDescription(resolved.value.description),
+    title: () => `${resolved.value.title} · ${site.siteName}`,
+    description: () => description.value,
     robots: () =>
       resolved.value.noindex || route.query.login !== undefined
         ? 'noindex, follow'
         : 'index, follow, max-image-preview:large',
     ogType: () => resolved.value.type ?? 'website',
-    ogSiteName: SITE_NAME,
+    ogSiteName: () => site.siteName,
     ogLocale: 'zh_CN',
-    ogTitle: () => `${resolved.value.title} · ${SITE_NAME}`,
-    ogDescription: () => metaDescription(resolved.value.description),
+    ogTitle: () => `${resolved.value.title} · ${site.siteName}`,
+    ogDescription: () => description.value,
     ogUrl: () => canonical.value,
     ogImage: () => image.value,
     ogImageSecureUrl: () =>
@@ -96,8 +94,8 @@ export function useSeo(input: SeoInput | (() => SeoInput)) {
     ogImageHeight: () => (usesDefaultImage.value ? 630 : undefined),
     ogImageAlt: () => resolved.value.title,
     twitterCard: 'summary_large_image',
-    twitterTitle: () => `${resolved.value.title} · ${SITE_NAME}`,
-    twitterDescription: () => metaDescription(resolved.value.description),
+    twitterTitle: () => `${resolved.value.title} · ${site.siteName}`,
+    twitterDescription: () => description.value,
     twitterImage: () => image.value,
     twitterImageAlt: () => resolved.value.title,
   })
